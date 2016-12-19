@@ -1,1 +1,1 @@
-- https://rikitoro.github.io/naritaijinsei/index.html
+- https://rikitoro.github.io/naritaijinsei/
