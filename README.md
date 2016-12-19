@@ -1,0 +1,1 @@
+- https://rikitoro.github.io/naritaijinsei/index.html
