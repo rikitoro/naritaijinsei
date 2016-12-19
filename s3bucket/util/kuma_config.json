@@ -1,0 +1,5 @@
+{
+  "base_image": "kuma_base.png",
+  "mask_image": "kuma_mask.bmp",
+  "center": [497, 133]
+}

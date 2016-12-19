@@ -1,0 +1,5 @@
+{
+  "base_image": "neko_base.jpg",
+  "mask_image": "neko_mask.bmp",
+  "center": [168, 183]
+}

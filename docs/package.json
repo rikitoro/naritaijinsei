@@ -1,0 +1,21 @@
+{
+  "name": "naritaijinsei",
+  "version": "0.0.1",
+  "description": "Naritaijiseni-App",
+  "main": "bundle.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "browserify --debug --transform babelify app.jsx --outfile bundle.js"
+  },
+  "author": "yoshiaki rikitake",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.7.15",
+    "babelify": "^6.4.0",
+    "browserify": "^13.1.1",
+    "jquery": "^3.1.1",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1",
+    "uuid": "^3.0.1"
+  }
+}
