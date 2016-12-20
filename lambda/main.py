@@ -52,7 +52,8 @@ def lambda_handler(event, context):
     config  = get_config_from_s3(bucket = S3_BUCKET, folder = S3_UTIL_FOLDER, file = event["config"])
 
     # get images
-    source_image    = get_image_from_s3(bucket = S3_BUCKET, folder = S3_INPUT_FOLDER,file = event["source_image"])
+    original_image    = get_image_from_s3(bucket = S3_BUCKET, folder = S3_INPUT_FOLDER,file = event["source_image"])
+    source_image    = cv2.resize(original_image, (800, 600),cv2.INTER_LINEAR)
     base_image      = get_image_from_s3(bucket = S3_BUCKET, folder = S3_UTIL_FOLDER, file = config["base_image"])
     mask_image      = get_image_from_s3(bucket = S3_BUCKET, folder = S3_UTIL_FOLDER, file = config["mask_image"])
 
