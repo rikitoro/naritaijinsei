@@ -3,12 +3,22 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const AWS = require('aws-sdk');
 const UUID = require('uuid');
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 // Initialize the Amazon Cognito credentials provider
 AWS.config.region = 'ap-northeast-1'; // Region
 AWS.config.credentials = new AWS.CognitoIdentityCredentials({
     IdentityPoolId: 'ap-northeast-1:06a88243-bfb8-4122-8fc8-879c85b4be72'
 });
+
+const ImageViewer = (props) => {
+  if (props.imageUrl) {
+    return <div><img src={props.imageUrl} /></div>;
+  } else {
+    return <div><p> IF I WERE A PRETTY CAT...</p></div>;
+  }
+};
 
 const KumaImage = React.createClass({
   render: function () {
@@ -117,18 +127,22 @@ const App = React.createClass({
 
   render: function() {
     return (
-      <div>
-        <input type="file" ref="file" onChange={this.handleSelectFile} />
+      <MuiThemeProvider>
+      <Card>
+        <CardHeader title="If I were a pretty cat"/>
+        <CardActions>
+        <input type="file" ref="file" accept="image/*"
+          onChange={this.handleSelectFile} />
         <button onClick={this.uploadClick}>
           ファイルをアップロード
         </button>
         <button onClick={this.narimasuClick}>
           猫になる！
         </button>
-        <KumaImage
-          imageUrl={this.state.imageUrl}
-        />
-      </div>
+        <ImageViewer imageUrl = {this.state.imageUrl}/>
+        </CardActions>
+      </Card>
+      </MuiThemeProvider>
     );
   }
 });
