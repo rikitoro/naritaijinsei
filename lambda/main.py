@@ -11,7 +11,7 @@ import json
 s3 = boto3.client('s3')
 
 def get_config_from_s3(bucket, folder, file):
-    tmp_config_filename = '/tmp/' + uuid.uuid4().hex + file
+    tmp_config_filename = '/tmp/' + file
     key = folder + file
     s3.download_file(Bucket = bucket, Key = key, Filename = tmp_config_filename)
     with open(tmp_config_filename, 'r') as f:
@@ -43,7 +43,9 @@ def put_image_to_s3(image, bucket, folder, file):
         Params={
             'Bucket': bucket,
             'Key': key
-        }
+        },
+        ExpiresIn = 600,
+        HttpMethod = 'GET'
     )
     return signed_url
 
