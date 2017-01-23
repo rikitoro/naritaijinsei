@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { uploadFileAndTransform } from '../actions'
+import AppBar from 'material-ui/AppBar'
+import CircularProgress from 'material-ui/CircularProgress'
 import FilePicker from '../components/FilePicker'
 
 class App extends Component {
@@ -24,32 +26,43 @@ class App extends Component {
       isTransforming, isTransformSuccess, isTransformFailure } = this.props
     return (
       <div>
+        <AppBar
+          title="私、猫になりたい人生だった"
+        />
+        <p>
+          あなたの人生を猫にします。時折失敗します。ご愛敬
+        </p>
+        <p>
+          注意: 画像ファイルおよび変換後の画像ファイルは一時的にサーバーへ保存されます。
+          それらのファイルは1日後にサーバーから削除されるよう設定しています。
+        </p>
+        <h3>
+          あなたの顔が写った画像を選択してください
+        </h3>
         <FilePicker
           onChangeFiles={this.handleChangeFiles}
           disabled={isUploading || isTransforming} />
-        {filename &&
-          <h2> filename: {filename} </h2>
-        }
+        <br />
         {isUploading &&
-          <h2> Now uploading </h2>
-        }
-        {isUploadFailure &&
-          <h2> Upload failure </h2>
-        }
-        {isUploadSuccess &&
-          <h2> Upload success </h2>
-        }
-        {isTransforming &&
-          <h2> Now transforming your image </h2>
-        }
-        {isTransformSuccess &&
           <div>
-            <h2> Image Url: {image_url} </h2>
-            <img src={image_url} />
+            <h3> 画像をアップロード中です </h3>
+            <CircularProgress />
           </div>
         }
+        {isUploadFailure &&
+          <h3> 画像のアップロードに失敗しました </h3>
+        }
+        {isTransforming &&
+          <div>
+            <h3> 画像を変換中です </h3>
+            <CircularProgress />
+          </div>
+        }
+        {isTransformSuccess &&
+          <img src={image_url} />
+        }
         {isTransformFailure &&
-          <h2> Image Transfrom Failure </h2>
+          <h3> 画像の変換に失敗しました </h3>
         }
       </div>
     )
