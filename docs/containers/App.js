@@ -1,9 +1,12 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { uploadFileAndTransform } from '../actions'
+
+import FilePicker from '../components/FilePicker'
+
 import AppBar from 'material-ui/AppBar'
 import CircularProgress from 'material-ui/CircularProgress'
-import FilePicker from '../components/FilePicker'
+import FlatButton from 'material-ui/FlatButton';
 
 class App extends Component {
   constructor(props) {
@@ -28,6 +31,7 @@ class App extends Component {
       <div>
         <AppBar
           title="私、猫になりたい人生だった"
+          iconElementRight={<a href="https://github.com/rikitoro/naritaijinsei"><FlatButton label="code" /></a>}
         />
         <h2>
           あなたの人生を猫にします。時折失敗します。ご愛敬
