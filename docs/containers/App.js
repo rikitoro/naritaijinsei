@@ -36,13 +36,15 @@ class App extends Component {
           注意: 画像ファイルは一時的にサーバーへ保存されます。
           なお、それらのファイルは1日後にサーバーから削除されます。
         </p>
-
+        <hr />
         <h3>
           あなたの顔が写った画像を選択してください
         </h3>
         <FilePicker
           onChangeFiles={this.handleChangeFiles}
           disabled={isUploading || isTransforming} />
+        <br />
+        <hr />
         <br />
         {isUploading &&
           <div>
