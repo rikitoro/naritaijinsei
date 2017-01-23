@@ -1,23 +1,27 @@
 {
-  "name": "naritaijinsei",
-  "version": "0.0.1",
-  "description": "Naritaijiseni-App",
-  "main": "bundle.js",
+  "name": "s3fileuploader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify --debug --transform babelify app.jsx --outfile bundle.js"
+    "build": "browserify --debug --transform babelify index.js --outfile bundle.js",
+    "build-release": "browserify --transform babelify index.js --outfile bundle.js"
   },
-  "author": "yoshiaki rikitake",
+  "author": "Yoshiaki Rikitake",
   "license": "MIT",
-  "dependencies": {
-    "aws-sdk": "^2.7.15",
+  "devDependencies": {
     "babelify": "^6.4.0",
-    "browserify": "^13.1.1",
-    "jquery": "^3.1.1",
-    "material-ui": "^0.16.5",
-    "react": "^15.4.1",
-    "react-dom": "^15.4.1",
-    "react-tap-event-plugin": "^2.0.1",
-    "uuid": "^3.0.1"
+    "browserify": "^13.1.1"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.7.27",
+    "babel-polyfill": "^6.22.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-redux": "^5.0.2",
+    "redux": "^3.6.0",
+    "redux-logger": "^2.7.4",
+    "redux-thunk": "^2.2.0"
   }
 }
