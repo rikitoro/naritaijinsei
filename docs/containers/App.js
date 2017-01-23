@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { uploadFileToS3 } from '../actions'
+import { uploadFileAndTransform } from '../actions'
 import FilePicker from '../components/FilePicker'
 
 class App extends Component {
@@ -15,15 +15,18 @@ class App extends Component {
     }
 
     const { dispatch } = this.props
-    dispatch(uploadFileToS3(files[0]))
+    dispatch(uploadFileAndTransform(files[0]))
   }
 
   render() {
-    const { filename, isUploading, isUploadSuccess, isUploadFailure } = this.props
+    const { filename, image_url,
+      isUploading, isUploadSuccess, isUploadFailure,
+      isTransforming, isTransformSuccess, isTransformFailure } = this.props
     return (
       <div>
         <FilePicker
-          onChangeFiles={this.handleChangeFiles} />
+          onChangeFiles={this.handleChangeFiles}
+          disabled={isUploading || isTransforming} />
         {filename &&
           <h2> filename: {filename} </h2>
         }
@@ -36,6 +39,18 @@ class App extends Component {
         {isUploadSuccess &&
           <h2> Upload success </h2>
         }
+        {isTransforming &&
+          <h2> Now transforming your image </h2>
+        }
+        {isTransformSuccess &&
+          <div>
+            <h2> Image Url: {image_url} </h2>
+            <img src={image_url} />
+          </div>
+        }
+        {isTransformFailure &&
+          <h2> Image Transfrom Failure </h2>
+        }
       </div>
     )
   }
@@ -45,9 +60,13 @@ class App extends Component {
 App.propTypes = {
   dispatch: PropTypes.func.isRequired,
   filename: PropTypes.string.isRequired,
+  image_url: PropTypes.string.isRequired,
   isUploading: PropTypes.bool.isRequired,
   isUploadSuccess: PropTypes.bool.isRequired,
-  isUploadFailure: PropTypes.bool.isRequired
+  isUploadFailure: PropTypes.bool.isRequired,
+  isTransforming: PropTypes.bool.isRequired,
+  isTransformSuccess: PropTypes.bool.isRequired,
+  isTransformFailure: PropTypes.bool.isRequired
 }
 
 function mapStateToProps(state) {
