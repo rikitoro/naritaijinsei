@@ -6,7 +6,9 @@ import FilePicker from '../components/FilePicker'
 
 import AppBar from 'material-ui/AppBar'
 import CircularProgress from 'material-ui/CircularProgress'
-import FlatButton from 'material-ui/FlatButton';
+import ActionCode from 'material-ui/svg-icons/action/code'
+import IconButton from 'material-ui/IconButton'
+import {fullWhite} from 'material-ui/styles/colors'
 
 class App extends Component {
   constructor(props) {
@@ -31,7 +33,8 @@ class App extends Component {
       <div>
         <AppBar
           title="私、猫になりたい人生だった"
-          iconElementRight={<a href="https://github.com/rikitoro/naritaijinsei"><FlatButton label="code" /></a>}
+          iconElementRight={<LinkToSource href="https://github.com/rikitoro/naritaijinsei" description="Link to Source" />
+          }
         />
         <h2>
           あなたの人生を猫にします。時折失敗します。ご愛敬
@@ -88,6 +91,18 @@ App.propTypes = {
   isTransformSuccess: PropTypes.bool.isRequired,
   isTransformFailure: PropTypes.bool.isRequired
 }
+
+///
+const LinkToSource = ({ description, href }) => (
+  <IconButton
+    tooltip={description}
+    touch={true}
+    tooltipPosition="bottom-left"
+    href={href}
+  >
+    <ActionCode color={fullWhite} />
+  </IconButton>
+)
 
 function mapStateToProps(state) {
   return state
