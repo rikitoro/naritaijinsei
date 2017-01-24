@@ -4,15 +4,17 @@ import IconButton from 'material-ui/IconButton'
 import ActionCode from 'material-ui/svg-icons/action/code'
 import {fullWhite} from 'material-ui/styles/colors'
 
-const LinkToSourceIconButton = ({ description, href }) => (
+const LinkToCodeIconButton = (prop) => (
   <IconButton
-    tooltip={description}
+    {...prop}
+    // tooltip={description}
     touch={true}
-    tooltipPosition="bottom-left"
-    href={href}
+    tooltip={prop.tooltip || "Link to code"}
+    tooltipPosition={prop.tooltipPosition || "bottom-left"}
+    // href={href}
   >
     <ActionCode color={fullWhite} />
   </IconButton>
 )
 
-export default LinkToSourceIconButton
+export default LinkToCodeIconButton
