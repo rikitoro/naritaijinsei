@@ -1,18 +1,20 @@
 {
-  "name": "s3fileuploader",
+  "name": "naritaijinsei",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "browserify --debug --transform babelify index.js --outfile bundle.js",
-    "build-release": "browserify --transform babelify index.js --outfile bundle.js"
+    "build-release": "set NODE_ENV=production && browserify -t babelify -t envify ./index.js | uglifyjs -c warnings=false > ./bundle.js"
   },
   "author": "Yoshiaki Rikitake",
   "license": "MIT",
   "devDependencies": {
     "babelify": "^6.4.0",
-    "browserify": "^13.1.1"
+    "browserify": "^13.1.1",
+    "envify": "^4.0.0",
+    "uglify-js": "^2.7.5"
   },
   "dependencies": {
     "aws-sdk": "^2.7.27",
