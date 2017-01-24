@@ -3,10 +3,13 @@ import { connect } from 'react-redux'
 import { uploadFileAndTransform } from '../actions'
 
 import FilePicker from '../components/FilePicker'
-import LinkToSourceIconButton from '../components/LinkToSourceIconButton'
+import LinkToCodeIconButton from '../components/LinkToCodeIconButton'
+import WarningParagraph from '../components/WarningParagraph'
 
 import AppBar from 'material-ui/AppBar'
 import CircularProgress from 'material-ui/CircularProgress'
+import Paper from 'material-ui/Paper';
+
 
 class App extends Component {
   constructor(props) {
@@ -32,26 +35,26 @@ class App extends Component {
         <AppBar
           title="私、猫になりたい人生だった"
           iconElementRight={
-            <LinkToSourceIconButton
+            <LinkToCodeIconButton
               href="https://github.com/rikitoro/naritaijinsei"
-              description="Link to source" />
+              tooltip="source code" />
           }
         />
         <h2>
-          あなたの人生を猫にします。時折失敗します。ご愛敬
+          あなたの人生を猫にします
         </h2>
-        <p>
-          注意: 画像ファイルは一時的にサーバーへ保存されます。
-          なお、それらのファイルは1日後にサーバーから削除されます。
-        </p>
+        <p> 時々失敗します。ご愛敬 </p>
         <hr />
         <h3>
           あなたの顔が写った画像を選択してください
         </h3>
         <FilePicker
           onChangeFiles={this.handleChangeFiles}
-          disabled={isUploading || isTransforming} />
-        <br />
+          disabled={isUploading || isTransforming}
+        />
+        <WarningParagraph>
+          画像ファイルは一時的にサーバーへ保存されます。ご了承ください。(1日後に削除されます)
+        </WarningParagraph>
         <hr />
         <br />
         {isUploading &&
