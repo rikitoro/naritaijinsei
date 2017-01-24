@@ -3,12 +3,10 @@ import { connect } from 'react-redux'
 import { uploadFileAndTransform } from '../actions'
 
 import FilePicker from '../components/FilePicker'
+import LinkToSourceIconButton from '../components/LinkToSourceIconButton'
 
 import AppBar from 'material-ui/AppBar'
 import CircularProgress from 'material-ui/CircularProgress'
-import ActionCode from 'material-ui/svg-icons/action/code'
-import IconButton from 'material-ui/IconButton'
-import {fullWhite} from 'material-ui/styles/colors'
 
 class App extends Component {
   constructor(props) {
@@ -33,7 +31,10 @@ class App extends Component {
       <div>
         <AppBar
           title="私、猫になりたい人生だった"
-          iconElementRight={<LinkToSource href="https://github.com/rikitoro/naritaijinsei" description="Link to Source" />
+          iconElementRight={
+            <LinkToSourceIconButton
+              href="https://github.com/rikitoro/naritaijinsei"
+              description="Link to source" />
           }
         />
         <h2>
@@ -93,16 +94,6 @@ App.propTypes = {
 }
 
 ///
-const LinkToSource = ({ description, href }) => (
-  <IconButton
-    tooltip={description}
-    touch={true}
-    tooltipPosition="bottom-left"
-    href={href}
-  >
-    <ActionCode color={fullWhite} />
-  </IconButton>
-)
 
 function mapStateToProps(state) {
   return state
