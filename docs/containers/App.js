@@ -40,14 +40,10 @@ class App extends Component {
               tooltip="source code" />
           }
         />
-        <h2>
-          あなたの人生を猫にします
-        </h2>
+        <h2> あなたの人生を猫にします </h2>
         <p> 時々失敗します。ご愛敬 </p>
         <hr />
-        <h3>
-          あなたの顔が写った画像を選択してください
-        </h3>
+        <h3> あなたの顔が写った画像を選択してください </h3>
         <FilePicker
           onChangeFiles={this.handleChangeFiles}
           disabled={isUploading || isTransforming}
