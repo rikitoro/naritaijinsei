@@ -65,11 +65,8 @@ def lambda_handler(event, context):
 
     base_image      = get_image_from_s3(bucket = S3_BUCKET, folder = S3_UTIL_FOLDER, file = config["base_image"])
     mask_image      = get_image_from_s3(bucket = S3_BUCKET, folder = S3_UTIL_FOLDER, file = config["mask_image"])
-    # resize source image
-    if original_image.shape[0] > 800:
-        source_image    = cv2.resize(original_image, (800, 800 * original_image.shape[1]/original_image.shape[0]), cv2.INTER_LINEAR)
-    else:
-        source_image    = original_image
+
+    source_image    = original_image
 
     # face detection
     faces = face_detector(source_image) # = [[x0, y0, w0, h0], ... ]
