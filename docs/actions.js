@@ -78,7 +78,7 @@ export function uploadFileAndTransform(file) {
         //
         const api_endpoint = "https://2vddqdwgcl.execute-api.ap-northeast-1.amazonaws.com/beta"
         const param = {
-          config: "neko_config.json",
+          config: "neko_config_1.json",
           source_image: filename
         }
         dispatch(transformRequest())
