@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import Upload from 'material-ui-upload/Upload';
 
 const FilePicker = ({ onChangeFiles, disabled }) => (
   <input
