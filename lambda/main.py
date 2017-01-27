@@ -52,7 +52,10 @@ def put_image_to_s3(image, bucket, folder, file):
     cv2.imwrite(tmp_image_filename, image)
     key = folder + file
     s3.upload_file(Filename = tmp_image_filename, Bucket = bucket, Key = key)
-    signed_url = s3.generate_presigned_url(
+
+def signed_url(bucket, folder, file):
+    key = folder + file
+    return s3.generate_presigned_url(
         ClientMethod='get_object',
         Params={
             'Bucket': bucket,
@@ -61,7 +64,6 @@ def put_image_to_s3(image, bucket, folder, file):
         ExpiresIn = 600,
         HttpMethod = 'GET'
     )
-    return signed_url
 
 
 ########################################################
@@ -94,8 +96,9 @@ def lambda_handler(event, context):
 
     # upload image to S3
     generated_image_filename = uuid.uuid4().hex + '.png';
-    image_url = put_image_to_s3(
-        image = output_image, bucket = S3_BUCKET, folder = S3_OUTPUT_FOLDER, file = generated_image_filename)
+    put_image_to_s3(image = output_image, bucket = S3_BUCKET, folder = S3_OUTPUT_FOLDER, file = generated_image_filename)
 
-    # image_url = 'https://s3-ap-northeast-1.amazonaws.com/' + S3_BUCKET + '/' + S3_OUTPUT_FOLDER + generated_image_filename;
+    # get signed url of uploaded image file
+    image_url = signed_url(bucket = S3_BUCKET, folder = S3_OUTPUT_FOLDER, file = generated_image_filename)
+
     return { "image_url": image_url }
