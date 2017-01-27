@@ -25,9 +25,26 @@ def get_image_from_s3(bucket, folder, file):
     return cv2.imread(tmp_image_filename)
 
 def face_detector(image):
-    gray_image  = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    # minify image
+    print(image.shape[:2])
+    height, width = image.shape[:2]
+    MAX_WIDTH = 800
+    if width > MAX_WIDTH:
+        minify_factor = 1.0 * MAX_WIDTH / width
+    else:
+        minify_factor = 1.0
+    print(minify_factor)
+    minify_image_size = (int(width * minify_factor), int(height * minify_factor))
+    print(minify_image_size)
+    minify_image = cv2.resize(image, minify_image_size, cv2.INTER_LINEAR)
+
+    # gray
+    gray_minify_image  = cv2.cvtColor(minify_image, cv2.COLOR_BGR2GRAY)
     faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-    return faceCascade.detectMultiScale(gray_image, 1.1, 3)
+    minify_faces = faceCascade.detectMultiScale(gray_minify_image, 1.1, 3)
+
+    faces = [[int(v / minify_factor) for v in face] for face in minify_faces]
+    return faces
 
 def trim_image(image, rect): # rect = [x, y, width, height]
     x, y, width, height = rect
@@ -61,12 +78,9 @@ def lambda_handler(event, context):
     config  = get_config_from_s3(bucket = S3_BUCKET, folder = S3_UTIL_FOLDER, file = event["config"])
 
     # get images
-    original_image    = get_image_from_s3(bucket = S3_BUCKET, folder = S3_INPUT_FOLDER,file = event["source_image"])
-
+    source_image    = get_image_from_s3(bucket = S3_BUCKET, folder = S3_INPUT_FOLDER,file = event["source_image"])
     base_image      = get_image_from_s3(bucket = S3_BUCKET, folder = S3_UTIL_FOLDER, file = config["base_image"])
     mask_image      = get_image_from_s3(bucket = S3_BUCKET, folder = S3_UTIL_FOLDER, file = config["mask_image"])
-
-    source_image    = original_image
 
     # face detection
     faces = face_detector(source_image) # = [[x0, y0, w0, h0], ... ]
@@ -76,7 +90,7 @@ def lambda_handler(event, context):
         return { "error": "cannot find faces" }
 
     # merge images
-    sized_face_image  = cv2.resize(face_image,(mask_image.shape[0],mask_image.shape[1]),cv2.INTER_LINEAR)
+    sized_face_image  = cv2.resize(face_image,(mask_image.shape[0],mask_image.shape[1]),cv2.INTER_CUBIC)
     cx, xy = config["center"]
     center = (cx, xy)
     output_image    = cv2.seamlessClone(sized_face_image, base_image, mask_image, center, cv2.NORMAL_CLONE)
