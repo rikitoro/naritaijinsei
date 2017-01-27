@@ -26,16 +26,13 @@ def get_image_from_s3(bucket, folder, file):
 
 def face_detector(image):
     # minify image
-    print(image.shape[:2])
     height, width = image.shape[:2]
     MAX_WIDTH = 800
     if width > MAX_WIDTH:
         minify_factor = 1.0 * MAX_WIDTH / width
     else:
         minify_factor = 1.0
-    print(minify_factor)
     minify_image_size = (int(width * minify_factor), int(height * minify_factor))
-    print(minify_image_size)
     minify_image = cv2.resize(image, minify_image_size, cv2.INTER_LINEAR)
 
     # gray
