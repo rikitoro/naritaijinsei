@@ -4,11 +4,11 @@ import { uploadFileAndTransform } from '../actions'
 
 import FilePicker from '../components/FilePicker'
 import LinkToCodeIconButton from '../components/LinkToCodeIconButton'
-import WarningParagraph from '../components/WarningParagraph'
 
 import AppBar from 'material-ui/AppBar'
 import CircularProgress from 'material-ui/CircularProgress'
-import Paper from 'material-ui/Paper';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card'
+
 
 
 class App extends Component {
@@ -43,38 +43,44 @@ class App extends Component {
         <h2> あなたの人生を猫にします </h2>
         <p> 時々失敗します。ご愛敬 </p>
         <p> 主演：あなたと聖福寺のねこさん </p>
-        <hr />
-        <h3> あなたの顔が写った画像を選択してください </h3>
-        <FilePicker
-          onChangeFiles={this.handleChangeFiles}
-          disabled={isUploading || isTransforming}
-        />
-        <WarningParagraph>
-          画像ファイルは一時的にサーバーへ保存されます。ご了承ください。(1日後に削除されます)
-        </WarningParagraph>
-        <hr />
-        <br />
-        {isUploading &&
-          <div>
-            <h3> 画像をアップロード中です </h3>
-            <CircularProgress />
-          </div>
-        }
-        {isUploadFailure &&
-          <h3> 画像のアップロードに失敗しました </h3>
-        }
-        {isTransforming &&
-          <div>
-            <h3> 画像を変換中です </h3>
-            <CircularProgress />
-          </div>
-        }
-        {isTransformSuccess &&
-          <img src={image_url} />
-        }
-        {isTransformFailure &&
-          <h3> 画像の変換に失敗しました </h3>
-        }
+        <Card>
+          <CardText>
+            あなたの顔が写った画像をアップロード
+          </CardText>
+          <CardActions>
+            <FilePicker
+              onChangeFiles={this.handleChangeFiles}
+              disabled={isUploading || isTransforming}
+            />
+          </CardActions>
+          {isUploading &&
+            <CardText>
+              画像をアップロード中です
+              <CircularProgress />
+            </CardText>
+          }
+          {isUploadFailure &&
+            <CardText>
+              画像のアップロードに失敗しました
+            </CardText>
+          }
+          {isTransforming &&
+            <CardText>
+              画像を変換中です
+              <CircularProgress />
+            </CardText>
+          }
+          {isTransformSuccess &&
+            <CardMedia>
+              <img src={image_url} />
+            </CardMedia>
+          }
+          {isTransformFailure &&
+            <CardText>
+              画像の変換に失敗しました
+            </CardText>
+          }
+        </Card>
       </div>
     )
   }
