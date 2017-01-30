@@ -7,6 +7,7 @@ import numpy as np
 import boto3
 import uuid
 import json
+import random
 
 s3 = boto3.client('s3')
 
@@ -84,7 +85,8 @@ def lambda_handler(event, context):
     # face detection
     faces = face_detector(source_image) # = [[x0, y0, w0, h0], ... ]
     if len(faces) > 0:
-        face_image = trim_image(source_image, faces[0])
+        face = random.choice(faces)
+        face_image = trim_image(source_image, face)
     else:
         return { "error": "cannot find faces" }
 
